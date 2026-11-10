@@ -1,0 +1,7 @@
+C:\Users\fall.22045\Desktop\TransferMarket\ServerMarket\bin\Debug\ServerMarket.exe.config
+C:\Users\fall.22045\Desktop\TransferMarket\ServerMarket\bin\Debug\ServerMarket.exe
+C:\Users\fall.22045\Desktop\TransferMarket\ServerMarket\bin\Debug\ServerMarket.pdb
+C:\Users\fall.22045\Desktop\TransferMarket\ServerMarket\obj\Debug\ServerMarket.csproj.AssemblyReference.cache
+C:\Users\fall.22045\Desktop\TransferMarket\ServerMarket\obj\Debug\ServerMarket.csproj.CoreCompileInputs.cache
+C:\Users\fall.22045\Desktop\TransferMarket\ServerMarket\obj\Debug\ServerMarket.exe
+C:\Users\fall.22045\Desktop\TransferMarket\ServerMarket\obj\Debug\ServerMarket.pdb

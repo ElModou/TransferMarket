@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.IO;
-using System.Linq.Expressions;
 using System.Text;
 using System.Net.Sockets;
 
@@ -13,15 +12,16 @@ namespace TransferMarket
         static StreamWriter writer;
         static StreamReader reader;
 
-
         static void Main(string[] args)
         {
             string scelta = "";
+
             if (!ConnettiAlServer())
             {
                 Console.ReadKey();
                 return;
             }
+
             while (scelta != "4")
             {
                 Console.Clear();
@@ -47,21 +47,19 @@ namespace TransferMarket
                         break;
 
                     case "2":
-                        Console.WriteLine("Acquista giocatore");
+                        Console.Clear();
                         AcquistaGiocatore();
                         Console.ReadKey();
                         break;
 
                     case "3":
-                        Console.WriteLine("Visualizza budget");
+                        Console.Clear();
                         VisualizzaBudget();
                         Console.ReadKey();
                         break;
 
                     case "4":
                         Console.WriteLine("Uscita dal Transfer Market...");
-                        writer.Close();
-                        reader.Close();
                         client.Close();
                         break;
 
@@ -73,7 +71,7 @@ namespace TransferMarket
             }
         }
 
-        static void VisualizzaGiocatori() //Funzione per visualizzare i giocatori disponibili
+        static void VisualizzaGiocatori()
         {
             Console.WriteLine("GIOCATORI DISPONIBILI NEL MERCATO");
             Console.WriteLine();
@@ -82,53 +80,77 @@ namespace TransferMarket
 
             Console.WriteLine(risposta);
 
-
             Console.WriteLine();
             Console.WriteLine("Premi 0 per tornare indietro");
 
             while (Console.ReadKey(true).KeyChar != '0')
             {
-                // Attende il tasto 0
             }
         }
-        static void AcquistaGiocatore() //Funzione per acquistare un giocatore
+
+        static void AcquistaGiocatore()
         {
-            Console.WriteLine("ACQUISTA GIOCATORI");
+            Console.WriteLine("ACQUISTA GIOCATORE");
+            Console.WriteLine();
+
+            Console.Write("Inserisci il nome del giocatore: ");
+            string nome = Console.ReadLine();
+
+            if (nome == "")
+            {
+                Console.WriteLine("Nome non valido.");
+                return;
+            }
+
+            string risposta = InviaComando("ACQUISTA " + nome);
+
+            Console.WriteLine();
+            Console.WriteLine(risposta);
         }
-        static void VisualizzaBudget() //Funzione per visualizzare il budget disponibile
+
+        static void VisualizzaBudget()
         {
             Console.WriteLine("BUDGET DISPONIBILE");
+            Console.WriteLine();
+
+            string risposta = InviaComando("BUDGET");
+
+            Console.WriteLine(risposta);
         }
-        static bool ConnettiAlServer() //Funzione per connettersi al server
+
+        static bool ConnettiAlServer()
         {
             try
             {
                 client = new TcpClient();
+
                 client.Connect("127.0.0.1", 5000);
 
                 NetworkStream stream = client.GetStream();
-                writer = new StreamWriter(stream, Encoding.UTF8) { AutoFlush = true };
+
+                writer = new StreamWriter(stream, Encoding.UTF8)
+                {
+                    AutoFlush = true
+                };
+
                 reader = new StreamReader(stream, Encoding.UTF8);
 
-                
+                Console.WriteLine("Connessione riuscita!");
 
-                Console.WriteLine("Connsesione riuscita");
                 return true;
-
             }
-
             catch (Exception)
             {
-                Console.WriteLine("Erroe: impossibile collegarsi al server. Attendi");
+                Console.WriteLine("Errore: impossibile collegarsi al server.");
                 return false;
             }
         }
-        
+
         static string InviaComando(string comando)
         {
             writer.WriteLine(comando);
+
             return reader.ReadLine();
         }
-
     }
 }

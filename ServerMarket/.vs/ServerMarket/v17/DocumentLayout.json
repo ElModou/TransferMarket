@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\vitolo.22054\\Documents\\GitHub\\TransferMarket\\ServerMarket\\",
+  "WorkspaceRootPath": "C:\\Users\\fall.22045\\Desktop\\TransferMarket\\ServerMarket\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{51DC6BFD-95C9-4A26-9540-1BC77FE7F68A}|ServerMarket.csproj|c:\\users\\vitolo.22054\\documents\\github\\transfermarket\\servermarket\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{51DC6BFD-95C9-4A26-9540-1BC77FE7F68A}|ServerMarket.csproj|c:\\users\\fall.22045\\desktop\\transfermarket\\servermarket\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{51DC6BFD-95C9-4A26-9540-1BC77FE7F68A}|ServerMarket.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -20,11 +20,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\vitolo.22054\\Documents\\GitHub\\TransferMarket\\ServerMarket\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\fall.22045\\Desktop\\TransferMarket\\ServerMarket\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\vitolo.22054\\Documents\\GitHub\\TransferMarket\\ServerMarket\\Program.cs",
+              "ToolTip": "C:\\Users\\fall.22045\\Desktop\\TransferMarket\\ServerMarket\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAN4AAAAAAAAAAAAcwAEBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIUAAAAAAAAAAAAYwI0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-28T11:39:16.831Z",
               "EditorCaption": ""
