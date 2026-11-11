@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -10,16 +9,11 @@ using System.Threading;
 class Program
 {
     static List<Giocatore> giocatori = new List<Giocatore>();
+    static string percorsoFile = @"C:\Users\fall.22045\Desktop\TransferMarket\ServerMarket\giocatori.txt";
 
     static void Main(string[] args)
     {
-        // Caricamento giocatori
-        giocatori.Add(new Giocatore("Haaland", "Attaccante", 80000000m));
-        giocatori.Add(new Giocatore("Mbappe", "Attaccante", 90000000m));
-        giocatori.Add(new Giocatore("Bellingham", "Centrocampista", 70000000m));
-        giocatori.Add(new Giocatore("Vinicius", "Attaccante", 65000000m));
-        giocatori.Add(new Giocatore("Donnarumma", "Portiere", 30000000m));
-        giocatori.Add(new Giocatore("Bastoni", "Difensore", 40000000m));
+        CaricaGiocatori();
 
         TcpListener server = new TcpListener(IPAddress.Any, 5000);
 
@@ -46,12 +40,43 @@ class Program
         }
     }
 
+    static void CaricaGiocatori()
+    {
+        giocatori.Clear();
+
+        string[] righe = File.ReadAllLines(percorsoFile);
+        foreach (string riga in righe)
+        {
+            if (riga.Trim() == "")
+            {
+                continue;
+            }
+
+            string[] dati = riga.Split(';');
+
+            // Se la riga non ha 3 pezzi (nome;ruolo;prezzo) la salto
+            // Questo evita l'errore IndexOutOfRangeException
+            if (dati.Length < 3)
+            {
+                Console.WriteLine("Riga non valida (salto): " + riga);
+                continue;
+            }
+
+            string nome = dati[0];
+            string ruolo = dati[1];
+            decimal prezzo = decimal.Parse(dati[2]);
+
+            giocatori.Add(new Giocatore(nome, ruolo, prezzo));
+        }
+        Console.WriteLine("Giocatori caricati: " + giocatori.Count);
+    }
+
     static void GestisciClient(TcpClient client)
     {
         // Ogni client ha il proprio budget e la propria squadra
-        decimal budget = 100000000m;
+        decimal budget = 1500000000m;
 
-        List<string> squadra = new List<string>();
+        List<Giocatore> squadra = new List<Giocatore>();
 
         NetworkStream stream = client.GetStream();
 
@@ -82,6 +107,12 @@ class Program
 
                 risposta = AcquistaGiocatore(nome, squadra, ref budget);
             }
+            else if (richiesta.StartsWith("CEDI "))
+            {
+                string nome = richiesta.Substring(5).Trim();
+
+                risposta = CediGiocatore(nome, squadra, ref budget);
+            }
             else
             {
                 risposta = "Comando non riconosciuto.";
@@ -111,17 +142,13 @@ class Program
         return risposta.TrimEnd(' ', '|');
     }
 
-    static string AcquistaGiocatore(string nome, List<string> squadra, ref decimal budget)
+    static string AcquistaGiocatore(string nome, List<Giocatore> squadra, ref decimal budget)
     {
-        foreach (Giocatore g in giocatori)
+        for (int i = 0; i < giocatori.Count; i++)
         {
+            Giocatore g = giocatori[i];
             if (g.nome.ToLower() == nome.ToLower())
             {
-                if (squadra.Contains(g.nome))
-                {
-                    return "ERRORE: giocatore gia acquistato.";
-                }
-
                 if (budget < g.prezzo)
                 {
                     return "ERRORE: budget insufficiente.";
@@ -129,7 +156,8 @@ class Program
 
                 budget = budget - g.prezzo;
 
-                squadra.Add(g.nome);
+                squadra.Add(g);
+                giocatori.Remove(g);
 
                 return "ACQUISTO EFFETTUATO: " + g.nome +
                        " | Prezzo: " + g.prezzo +
@@ -139,6 +167,32 @@ class Program
 
         return "ERRORE: giocatore non trovato.";
     }
+
+    static string CediGiocatore(string nome, List<Giocatore> squadra, ref decimal budget)
+    {
+        for (int i = 0; i < squadra.Count; i++)
+        {
+            Giocatore g = squadra[i];
+
+            if (g.nome.ToLower() == nome.ToLower())
+            {
+                // ridò i soldi al budget
+                budget = budget + g.prezzo;
+
+                // lo tolgo dalla squadra
+                squadra.RemoveAt(i);
+
+                // lo rimetto sul mercato
+                giocatori.Add(g);
+
+                return "CESSIONE EFFETTUATA: " + g.nome +
+                       " | Incassato: " + g.prezzo +
+                       " EUR | Budget residuo: " + budget + " EUR";
+            }
+        }
+
+        return "ERRORE: giocatore non presente nella tua squadra.";
+    }
 }
 
 class Giocatore
@@ -146,6 +200,13 @@ class Giocatore
     public string nome;
     public string ruolo;
     public decimal prezzo;
+
+    public Giocatore(string nome, string ruolo, string prezzo)
+    {
+        this.nome = nome;
+        this.ruolo = ruolo;
+        this.prezzo = decimal.Parse(prezzo);
+    }
 
     public Giocatore(string nome, string ruolo, decimal prezzo)
     {

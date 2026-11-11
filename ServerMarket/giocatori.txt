@@ -1,0 +1,31 @@
+
+Haaland;Attaccante;80000000
+Mbappe;Attaccante;90000000
+Bellingham;Centrocampista;70000000
+Vinicius;Attaccante;65000000
+Donnarumma;Portiere;30000000
+Bastoni;Difensore;40000000
+Lautaro;Attaccante;75000000
+Yamal;Attaccante;85000000
+Pedri;Centrocampista;60000000
+Gavi;Centrocampista;45000000
+Valverde;Centrocampista;65000000
+Rodri;Centrocampista;80000000
+Salah;Attaccante;55000000
+Kane;Attaccante;60000000
+Saka;Attaccante;70000000
+Foden;Centrocampista;60000000
+Musiala;Centrocampista;75000000
+Wirtz;Centrocampista;70000000
+Van Dijk;Difensore;35000000
+Ruben Dias;Difensore;45000000
+Hakimi;Difensore;50000000
+Theo Hernandez;Difensore;45000000
+Saliba;Difensore;55000000
+Alisson;Portiere;30000000
+Courtois;Portiere;25000000
+Maignan;Portiere;35000000
+Calhanoglu;Centrocampista;30000000
+Kvaratskhelia;Attaccante;55000000
+Osimhen;Attaccante;60000000
+Dybala;Attaccante;25000000
